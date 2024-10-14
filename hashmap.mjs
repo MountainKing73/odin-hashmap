@@ -48,6 +48,14 @@ class HashMap {
     return this.buckets[hashCode].get(key);
   }
 
+  has(key) {
+    const hashCode = hash(key, this.buckets.length);
+
+    const value = this.buckets[hashCode].get(key);
+
+    return value === null ? false : true;
+  }
+
   prettyPrint() {
     console.log("Capacity: " + this.capacity);
     console.log("Load Factor: " + this.loadFactor);

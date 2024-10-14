@@ -14,3 +14,6 @@ console.log(test);
 test.prettyPrint();
 
 console.log("apple: " + test.get("apple"));
+
+console.log("Has apple: " + test.has("apple"));
+console.log("Has pineapple: " + test.has("pineapple"));
