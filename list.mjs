@@ -21,6 +21,17 @@ class LinkedList {
     }
   }
 
+  size() {
+    let size = 0;
+    let current = this.head;
+    while (current != null) {
+      size++;
+      current = current.getNextNode();
+    }
+
+    return size;
+  }
+
   /*  prepend(value) {
     let newNode = new Node();
     newNode.setValue(value);
@@ -36,16 +47,6 @@ class LinkedList {
     }
   }
 
-  size() {
-    let size = 0;
-    let current = this.head;
-    while (current != null) {
-      size++;
-      current = current.getNextNode();
-    }
-
-    return size;
-  }
 
   head() {
     return this.head;
@@ -227,6 +228,37 @@ class LinkedList {
     }
 
     return null;
+  }
+
+  remove(key) {
+    let curr = this.head;
+    let prev = this.head;
+
+    if (this.head === null) {
+      return false;
+    }
+
+    while (curr != null) {
+      if (curr.getValue().getKey() === key) {
+        if (curr === this.head) {
+          if (this.head.getNextNode() === null) {
+            this.head = null;
+            this.tail = null;
+          } else {
+            this.head = this.head.getNextNode();
+          }
+        } else {
+          prev.setNextNode(curr.getNextNode());
+        }
+
+        return true;
+      }
+
+      prev = curr;
+      curr = curr.getNextNode();
+    }
+
+    return false;
   }
 
   toString() {

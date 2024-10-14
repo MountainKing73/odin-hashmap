@@ -15,6 +15,10 @@ class Entry {
   getValue() {
     return this.value;
   }
+
+  toString() {
+    return "( " + this.key + ", " + this.value + ")";
+  }
 }
 
 export { Entry };
