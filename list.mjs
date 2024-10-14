@@ -21,7 +21,7 @@ class LinkedList {
     }
   }
 
-  prepend(value) {
+  /*  prepend(value) {
     let newNode = new Node();
     newNode.setValue(value);
     if (this.head === null) {
@@ -195,7 +195,7 @@ class LinkedList {
     let val = curr.getValue();
     prev.setNextNode(curr.getNextNode());
     return val;
-  }
+  } */
 
   // Update value if key exists or insert new entry at end of list
   updateInsert(key, value) {
@@ -214,6 +214,19 @@ class LinkedList {
     newNode.setValue(entry);
     newNode.setNextNode(curr);
     this.tail.setNextNode(newNode);
+  }
+
+  get(key) {
+    let curr = this.head;
+
+    while (curr != null) {
+      if (curr.getValue().getKey() === key) {
+        return curr.getValue().getValue();
+      }
+      curr = curr.getNextNode();
+    }
+
+    return null;
   }
 
   toString() {

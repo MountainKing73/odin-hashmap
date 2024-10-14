@@ -23,9 +23,13 @@ class HashMap {
     this.loadFactor = val;
   }
 
+  // TODO: Need to add growth
   set(key, value) {
     const hashCode = hash(key, this.buckets.length);
     console.log("hashCode: " + hashCode);
+    if (hashCode < 0 || hashCode >= this.buckets.length) {
+      throw new Error("Trying to access index out of bound");
+    }
 
     if (this.buckets[hashCode] === undefined) {
       const entry = new Entry(key, value);
@@ -36,6 +40,12 @@ class HashMap {
       const list = this.buckets[hashCode];
       list.updateInsert(key, value);
     }
+  }
+
+  get(key) {
+    const hashCode = hash(key, this.buckets.length);
+
+    return this.buckets[hashCode].get(key);
   }
 
   prettyPrint() {

@@ -12,3 +12,5 @@ test.set("banana", "yellow");
 console.log(test);
 
 test.prettyPrint();
+
+console.log("apple: " + test.get("apple"));
