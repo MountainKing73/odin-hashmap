@@ -14,7 +14,7 @@ function hash(key, size) {
 
 class HashMap {
   constructor() {
-    this.capacity = 15;
+    this.capacity = 16;
     this.loadFactor = 0.75;
     this.buckets = new Array(this.capacity).fill(null);
   }
@@ -23,10 +23,8 @@ class HashMap {
     this.loadFactor = val;
   }
 
-  // TODO: Need to add growth
-  set(key, value) {
+  add(key, value) {
     const hashCode = hash(key, this.buckets.length);
-    console.log("hashCode: " + hashCode);
     if (hashCode < 0 || hashCode >= this.buckets.length) {
       throw new Error("Trying to access index out of bound");
     }
@@ -40,6 +38,21 @@ class HashMap {
       const list = this.buckets[hashCode];
       list.updateInsert(key, value);
     }
+  }
+
+  set(key, value) {
+    // Check if we are over load factor now and grow if needed
+    const currSize = this.length();
+    if ((currSize + 1) / this.capacity > this.loadFactor) {
+      let currEntries = this.entries();
+      this.capacity += 16;
+      this.buckets = new Array(this.capacity).fill(null);
+      currEntries.forEach((entry) => {
+        this.add(entry.getKey(), entry.getValue());
+      });
+    }
+
+    this.add(key, value);
   }
 
   get(key) {
@@ -86,6 +99,42 @@ class HashMap {
     for (let i = 0; i < this.capacity; i++) {
       this.buckets[i] = null;
     }
+  }
+
+  keys() {
+    let keyList = [];
+
+    for (let i = 0; i < this.capacity; i++) {
+      if (this.buckets[i]) {
+        keyList.push(this.buckets[i].keys());
+      }
+    }
+
+    return keyList;
+  }
+
+  values() {
+    let valueList = [];
+
+    for (let i = 0; i < this.capacity; i++) {
+      if (this.buckets[i]) {
+        valueList.push(this.buckets[i].values());
+      }
+    }
+
+    return valueList;
+  }
+
+  entries() {
+    let entryList = new Array();
+
+    for (let i = 0; i < this.capacity; i++) {
+      if (this.buckets[i]) {
+        entryList = entryList.concat(this.buckets[i].entries());
+      }
+    }
+
+    return entryList;
   }
 
   prettyPrint() {
